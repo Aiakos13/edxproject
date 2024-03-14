@@ -1,69 +1,82 @@
 #include <cs50.h>
 #include <stdio.h>
+#include <math.h>
 
-int main()
+int get_digit(long num, int idx);
+int get_int_len(long num);
+
+// Ask for credit card number
+// Find every other digit starting with the second to last digit
+// Multiply each by 2
+// Add all of the digits together
+
+int main(void)
 {
-    long credit;
-    long credit_copy;
-    int total_sum = 0, pos = 0, total_length = 0;
-    do
-    {
-        credit = get_long("number:");
-        credit_copy = credit;
-        while (credit != 0)
-        {
-            if (pos % 2 != 0)
-            {
-                int temp = 2 * (credit % 10);
-                if (temp > 9)
-                {
-                    total_sum += (temp % 10 + temp / 10); // 12=>1+2
-                }
-                else
-                {
-                    total_sum += temp;
-                }
+    const long credit_num = get_long("Number: ");
 
-            }
-            else
-            {
-                total_sum += credit % 10;
-            }
-            credit = credit / 10;
-            pos++;
-            total_length++;
+    // digit stores the current digit of the credit card number
+    int digit;
+
+    // final stores the sum of the all the digits multiplied by two
+    int final = 0;
+
+    // Loops over every second digit, starting with the second to last one
+    for (int i = 1; (digit = get_digit(credit_num, i)) != -1; i += 2)
+    {
+        // Multiplies the current digit by 2
+        digit *= 2;
+        // Adds every digit of the digit to the final sum
+        for (int j = 0; get_digit(digit, j) != -1; j++)
+        {
+            final += get_digit(digit, j);
         }
     }
 
-    while (credit != 0);
-
-    if (total_sum % 10 == 0)
+    // Loops over every second digit, starting with the last one
+    // and adds that digit to the final sum
+    for (int i = 0; (digit = get_digit(credit_num, i)) != -1; i += 2)
     {
-        // amex
-        long amex_start = credit_copy / 100000000000000;
-        if ((amex_start == 34 || amex_start == 37) && total_length == 15)
+        final += digit;
+    }
+
+    const int credit_len = get_int_len(credit_num);
+    const int first_num = get_digit(credit_num, credit_len - 1);
+    const int second_num = get_digit(credit_num, credit_len - 2);
+    if (get_digit(final, 0) == 0)
+    {
+        if (first_num == 4 && (credit_len == 13 || credit_len == 16))
+        {
+            printf("VISA\n");
+        }
+        else if (credit_len == 15 && first_num == 3 && (second_num == 4 || second_num == 7))
         {
             printf("AMEX\n");
-            return 0;
         }
-        // master
-        long master_card_start = credit_copy / 100000000000000;
-        if ((total_length == 16) && (master_card_start >= 52 && master_card_start <= 55))
+        else if (credit_len == 16 && first_num == 5 && second_num >= 1 && second_num <= 5)
         {
             printf("MASTERCARD\n");
-            return 0;
         }
-        // visa
-        long visa_start = credit_copy / 100000000000000;
-        if ((total_length == 16 || total_length == 13) && (visa_start == 4 || master_card_start / 10 == 4))
+        else
         {
-            printf("Visa\n");
-            return 0;
+            printf("INVALID\n");
         }
-        printf("INVALID\n");
     }
     else
     {
         printf("INVALID\n");
     }
+}
+
+int get_digit(long num, int idx)
+{
+    const long power = pow(10, idx + 1);
+    return power / 10 > num ? -1 : (num % power) / (power / 10);
+}
+
+int get_int_len(long num)
+{
+    int len;
+    for (len = 0; pow(10, len) < num; len++)
+        ;
+    return len;
 }
