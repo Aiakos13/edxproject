@@ -17,25 +17,22 @@ int main()
                 int temp = 2 * (credit % 10);
                 if (temp > 9)
                 {
-                    total_sum += (temptemp % 10 + temp / 10); // 12=>1+2
+                    total_sum += (temp % 10 + temp / 10); // 12=>1+2
                 }
                 else
                 {
                     total_sum += temp;
                 }
+
             }
             else
             {
-                total_sum += temp;
+                total_sum += credit % 10;
             }
+            credit = credit / 10;
+            pos++;
+            total_length++;
         }
-        else
-        {
-            total_sm += credit % 10;
-        }
-        credit = credit / 10;
-        pos++;
-        total_length++;
     }
 
     while (credit != 0);
@@ -58,13 +55,15 @@ int main()
         }
         // visa
         long visa_start = credit_copy / 100000000000000;
-        if ((total_length == 16 || total == 13) && (visa_start == 4 || master_card_start / 10 == 4))
+        if ((total_length == 16 || total_length == 13) && (visa_start == 4 || master_card_start / 10 == 4))
         {
             printf("Visa\n");
             return 0;
         }
         printf("INVALID\n");
-    }else{
+    }
+    else
+    {
         printf("INVALID\n");
     }
 }
