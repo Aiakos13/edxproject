@@ -1,0 +1,1 @@
+SELECT AVG(energy) AS e , AVG(valence) AS v , AVG(danceability) AS d  FROM songs ORDER BY e,v,d  DESC ;

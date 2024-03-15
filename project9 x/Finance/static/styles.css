@@ -1,0 +1,85 @@
+body
+{
+    background-color: #212529;
+}
+
+.password-condition
+{
+    color: silver;
+    font-size: large;
+    margin-left: -2rem;
+}
+
+h2
+{
+    color: silver;
+    font-size: xx-large;
+}
+
+.subtract
+{
+    color: silver;
+    font-size: large;
+    margin-bottom: 2rem;
+}
+
+.form-group
+{
+    margin: 1rem;
+}
+
+.navbar-brand
+{
+    /* size for brand */
+    font-size: xx-large;
+    margin-left: 4rem;
+    margin-right: 4rem;
+}
+
+.form-control
+{
+    /* center form controls */
+    display: inline-block;
+
+    /* override Bootstrap's 100% width for form controls */
+    width: auto;
+}
+
+.table
+{
+    margin: auto;
+    width: 75%;
+}
+
+.btn
+{
+    margin-top: 1rem;
+}
+
+.display-4
+{
+    margin-bottom: 1.5rem;
+    color: white;
+}
+
+.form-select
+{
+    width: auto;
+    margin-bottom: 2rem;
+}
+
+.logout
+{
+    margin-right: 2rem;
+}
+
+.navbar-text
+{
+    text-align: center;
+}
+
+.footer
+{
+    font-size: small;
+    margin-top: 4rem;
+}
