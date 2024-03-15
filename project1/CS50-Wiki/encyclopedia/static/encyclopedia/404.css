@@ -1,0 +1,89 @@
+.wiwki-404-container {
+  margin: 60px 10px;
+  height: 100vh;
+  max-width: 100vw;
+  overflow: hidden; }
+
+.jumbotron {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 20px 20px 20px;
+  max-width: 100%;
+  height: 95vh;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  overflow-x: hidden; }
+  .jumbotron--left {
+    display: block;
+    min-height: 100%; }
+    .jumbotron--left img {
+      display: block;
+      height: 100%;
+      width: 100%; }
+  .jumbotron--right {
+    background: rgba(0, 0, 0, 0.35);
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0; }
+    .jumbotron--right .header {
+      background: #d8d8d8; }
+      .jumbotron--right .header h1 {
+        font-family: "Times New Roman", Times, serif;
+        font-weight: 600;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #a3a3a4;
+        padding-bottom: 5px;
+        margin-bottom: 0; }
+      .jumbotron--right .header .content {
+        background: whitesmoke; }
+        .jumbotron--right .header .content p {
+          display: block;
+          width: 22rem;
+          color: #202122;
+          word-spacing: 1px;
+          font: 400 1.2rem sans-serif; }
+          .jumbotron--right .header .content p span {
+            font-weight: 550; }
+  .jumbotron .error-code {
+    position: relative;
+    margin: 20px 0;
+    font-size: 8rem;
+    color: red !important;
+    text-shadow: 0px 2px 20px rgba(0, 0, 0, 0.5);
+    z-index: 100; }
+    .jumbotron .error-code::before, .jumbotron .error-code::after {
+      content: "404";
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: -10%;
+      left: -15%;
+      font-size: 6rem;
+      color: #000;
+      z-index: 10;
+      text-shadow: 0px 2px 30px rgba(255, 255, 255, 0.7); }
+    .jumbotron .error-code::before {
+      color: #fff;
+      top: 85px;
+      left: 10%;
+      text-shadow: 0px 2px 30px rgba(0, 0, 0, 0.7);
+      z-index: 10; }
+  .jumbotron .home-btn {
+    font-weight: 600;
+    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.6); }
+
+@media screen and (max-width: 774px) {
+  .jumbotron {
+    display: block;
+    margin: 20px 20px 20px; }
+    .jumbotron--left {
+      display: none; }
+    .jumbotron--right .content .lost-text {
+      width: 80%;
+      padding: 0 30px; }
+
+  .home-btn-container {
+    padding-bottom: 20px; } }

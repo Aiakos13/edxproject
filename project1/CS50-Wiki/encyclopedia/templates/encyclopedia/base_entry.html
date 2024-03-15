@@ -1,0 +1,56 @@
+{% extends "encyclopedia/layout.html" %}
+{% block title %} Encyclopedia {% endblock %}
+{% block body_content %}
+
+<section id="base_entry_section">
+
+	<!-- Navigation control-->
+	<div id="entry_navbar" class="navigation header  align-items-center d-flex ">
+		<ul class="nav-list  d-flex ml-3 pt-lg-5 pt-md-2">
+			<!-- Home -->
+			<li class="nav-item">
+				<a class="link" href="{% url 'index' %}">
+					<button class="mx-2 btn px-4 btn-outline-success">
+						Home
+					</button>
+				</a>
+			</li>
+			<!-- Edit Entry-->
+			<li class="nav-item">
+				<a class="link desk-ct-after" href="{% url 'create_update' title %}">
+					<button class="btn btn-outline-warning">Edit</button>
+				</a>
+			</li>
+			<!-- Delete Entry-->
+			{% if debug %}
+			<li class="nav-item">
+				<a class="link desk-ct-after" href="{% url 'delete_entry' title %}">
+					<button id="delete_btn" class="btn btn-outline-danger">Delete</button>
+				</a>
+				{% verbatim  %}
+				<script>
+					document.getElementById('delete_btn').addEventListener('click', function () {
+						document.getElementById('deletion_modal').css.display = "block"
+
+					})
+				</script>
+				{% endverbatim  %}
+			</li>
+			{% endif %}
+		</ul>
+	</div>
+	<!-- Navigation control-->
+
+	<!-- Entry Content -->
+	<div id="base_entry_content" class="entry-wrapper px-3" style="overflow:auto">
+		<h1 class="title text-secondary font-weight-bolder">
+			{{title}}
+		</h1>
+		<hr class="my-n2">
+		<div id="ei_content" class="content-container my-3 py-3">
+			{{ entry|safe }}
+		</div>
+	</div>
+	<!-- Entry Content -->
+</section>
+{% endblock %}

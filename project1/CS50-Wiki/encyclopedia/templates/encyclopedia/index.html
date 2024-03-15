@@ -1,0 +1,79 @@
+{% extends "encyclopedia/layout.html" %}
+{% block title %} Encyclopedia {% endblock %}
+{% block body_content %}
+<section id="index_section" class="bg-light border-left mt-n3">
+	<hr class="my-0">
+	<div class="greeting-header text-center">
+		<h1 class="ff_wiki font-weight-bolder text-dark">Welcome To Wiki</h1>
+		
+	</div>
+	<div class="start-page px-3 bg-white pt-2">
+		<h2>Wiki Pages</h2>
+		<div id="az_list" class="wiki-link-container">
+			<form id="alphabet_form" action="" method="POST">
+				{% csrf_token %}
+				<ul class="btn-group">
+					<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">
+						A-Z
+					</button>
+					<div class="dropdown-menu bg-light p-2">
+						{% for letter in alphabet_list  %}
+						<li class="link_{{letter}} mx-1">
+							<a class="link_anchor font-weight-bold text-primary" data-value={{letter}} href="#"
+								style="font-size: 22px;">
+								{{letter}}
+							</a>
+						</li>
+						{% endfor %}
+						<input id="abc_input" type="hidden" name="letter" value="">
+						<script>
+							let abc_form = document.getElementById('alphabet_form')
+							document.querySelectorAll('.link_anchor').forEach(function (btn) {
+
+								btn.addEventListener('click', function (e) {
+									e.preventDefault();
+									document.getElementById("abc_input").value = btn.dataset.value;
+
+									// Load spinner
+									let spinner = document.getElementById('spinner');
+									setTimeout(function () {
+										/*only show spinner if loading takes more than one sec
+											Other wise it get annoying to users */
+										spinner.classList.remove('invisible');
+									}, 1000)
+									abc_form.submit();
+								})
+							})
+						</script>
+					</div>
+				</ul>
+			</form>
+		</div>
+
+		{# All avaialble Enties #}
+		<div id="spinner" class="invisible  position-fixed mh-100 mw-50 h-100 w-50 ">
+			<img
+				src="https://icon-library.com/images/loading-icon-transparent-background/loading-icon-transparent-background-12.jpg"
+				alt="loading-spinner" class="d-block  w-25 mw-25 mh-25">
+		</div>
+		<div class="entry-content">
+			<h5 class="font-weight-bold">Available Entry -
+				<span class="badge badge-secondary px-2">{{entries|length}}</s>
+			</h5>
+			<ul>
+				{% for entry in entries %}
+				<li class="p-1">
+					{# entry title and url #}
+					<a href="{% url 'wiki_entry' entry %}"> {{ entry }} </a>
+				</li>
+				{% empty %}
+				<li>
+					<h1 class="text-secondary text-centered "> No entry was found</h1>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+</section>
+{% endblock %}

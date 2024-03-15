@@ -1,0 +1,128 @@
+{% load static %}
+{% load encyclopedia_extras %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Fix for mobile viewport -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<base href="/">
+
+	<title>
+		{% block title %}
+		{% endblock %}
+	</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+		<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@700&display=swap" rel="stylesheet">
+	<link href="{% static 'encyclopedia/styles.css' %}" rel="stylesheet" />
+	<link href="{% static 'encyclopedia/404.css' %}" rel="stylesheet" />
+	{% block style %} {% endblock style %}
+</head>
+
+<body>
+	{% block body %}
+	<div class="row no-gutters">
+		<div class="index sidebar col-lg-2 col-md-3">
+			<nav id="sidebar_nav" class="navbar h-100 w-100 navbar-expanded-md navbar-light bg-light">
+				<div id="logo_wiki" class="navbar-brand">
+					<a class=" wiki-home text-dark text-decoration-none" href="{% url 'index' %}">
+						<figure class="figure text-center">
+							<img
+								src="https://user-images.githubusercontent.com/54720725/97774007-c1dd1500-1b2a-11eb-98a4-a05ae60f3cba.png"
+								alt="wiki image logo" class="logo_img figure-img img-fluid rounded">
+							<figcaption class="figure-caption font-weight-bold text-center">
+								<h4 class="ff_wiki figure_text">Wiki</h4>
+							</figcaption>
+						</figure>
+					</a>
+				</div>
+				<button id="sidebar_btn" class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#sidebar_nav_menu" aria-controls="sidebar_nav_menu" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse pt-3 px-2" id="sidebar_nav_menu">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item">
+							<form class="search-form" action="/" method="POST">
+								{% csrf_token %}
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<button id="wiki_search_btn" class="btn btn-secondary dropdown-toggle mobile-block"
+											type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+											<!-- Search dropdown links-->
+										<div id="search_dropdown" class="dropdown-menu bg-dark position-absolute">
+											{% for entry_item in entries_options  %}
+											<a class="dropdown-item bg-dark text-light" href="#">{{entry_item}}</a>
+											{% endfor %}
+										</div>
+									</div>
+									<!--Search bar-->
+									<input type="text" class="search form-control" list="wiki-list" placeholder="Search Encyclopedia"
+										name="search" aria-label="entry search bar">
+									<datalist id="wiki-list">
+										{% for entry in entries_options %}
+										<option value="{{entry|safe}}"></option>
+										{% endfor %}
+									</datalist>
+								</div>
+							</form>
+						</li>
+						<ul id="alt_nav_list" class="nav-list d-flex flex-row flex-md-column justify-content-around">
+							<li class="nav-item"><a class="nav-link text-primary" href="{% url 'index' %}">Home</a></li>
+							<li class="nav-item"><a class="nav-link text-primary" href="{% url 'create_update' %}">Create New Page</a>
+							</li>
+							<li class="nav-item"><a class="nav-link text-primary" href="{% url 'random_entry' %}">Random Page</a></li>
+						</ul>
+					</ul>
+			</nav>
+		</div>
+
+		<div class="main col-lg-9 col-md-8">
+			<!-- Django alert message -->
+			<div class="message-wrapper w-100 z-100 position-absolute">
+				{% if messages %}
+				<ul class="messages">
+					{% for message in messages %}
+					<li>
+						{% if message.tags == 'error' %}
+						<div class="alert alert-danger alert-dismissible fade show py-2" id="alert_message" role="alert">
+							{% else %}
+							<div class="alert alert-{{message.tags}} alert-dismissible fade show py-2" id="alert_message"
+								role="alert">
+								{% endif %}
+								{{ message }}
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+					</li>
+					{% endfor %}
+				</ul>
+				{% endif %}
+			</div>
+			<div class="main-container w-100">
+				{% block body_content %}
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+	{% endblock %}
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+		integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+		crossorigin="anonymous"></script>
+	<script src="{% static 'encyclopedia/main.js' %}"></script>
+</body>
+
+</html>

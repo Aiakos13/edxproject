@@ -1,0 +1,151 @@
+{% extends "encyclopedia/layout.html" %}
+{% block title %} Encyclopedia {% endblock title %}
+{% block body_content %}
+
+<section class="editor-main">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="header mt-3 text-uppercase text-secondary">
+					{% if config and config == "edit" %}
+					<h3 class="text-center">Edit Your Markdown</h3>
+					{% else %}
+					<h3 class="text-center">Create Your Markdown</h3>
+					{% endif %}
+				</div>
+				<hr />
+				<div class="entry-wrapper">
+					<!-- Form Content -->
+					<form  class="edit-form my-2" action="" method="post">
+						{% csrf_token %}
+						<h2 class="my-3">{{title}}</h2>
+						<div class="form-group pt-3">
+							<label class="entry-label" for="title">
+								{% if config and config == "create" %}
+								Create a title
+								{% else %}
+								Edit title
+								{% endif %}
+							</label><br />
+							<div class="entry-title d-flex align-middle align-items-center">
+								<input class="px-2" id="title" type="text" name="title" value="{{title|safe}}" required/>
+								{{ unavailable_entry|json_script:"unavailable_entry" }}
+								<p id="entry_validator" data-config="{{config}}" class="m-2 p-1 px-3 font-weight-bold"> </p>
+							</div>
+						</div>
+
+						<div class="form-group my-4 my-md-2">
+							<label class="entry-label" for="content">
+								{% if config and config == "create" %}
+								Create content
+								{% else %}
+								Edit content
+								{% endif %}
+							</label><br />
+							<textarea class="px-2 shadow-sm  my-2" style="height: auto" name="content" id="content" rows="10"
+							required>{{entry|safe}}</textarea>
+						</div>
+						<!--SUBMIT BUTTONS -->
+						<div class="navigation header align-items-center d-flex">
+							<input type="hidden" name="config" value={{config}} />
+							<ul class="nav-links-wrapper d-flex">
+								{% if config == "create" %}
+								<!--Creation Submit-->
+								<li class="nav-item">
+									<button id="submit_btn" class="mx-2 btn px-4 btn-outline-success" name="submit" value="create"
+										type=submit disabled>
+										Create
+									</button>
+								</li>
+
+								<!--Creation Cancel-->
+								<li class="nav-item">
+									<button class="mx-2 btn px-4 btn-outline-warning" type="submit">
+										Cancel
+									</button>
+								</li>
+								{% else %}
+								<!--ENTRY UPDATE-->
+								<!--Update Submit-->
+								<button id="submit_btn" type="submit" class="mx-2 btn px-4 btn-outline-primary" name="submit"
+									value="update" disabled>
+									Update
+								</button>
+								<!--Update Cancel-->
+								<li class="nav-item">
+									<button class="mx-2 btn px-4 btn-outline-warning" type="submit">
+										Cancel
+									</button>
+								</li>
+								{% endif %}
+							</ul>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- Entry Content -->
+	</div>
+</section>
+{% verbatim %}
+<script>
+
+	const unavailable_entries = JSON.parse(document.getElementById('unavailable_entry').innerText);
+	const entry_title = document.getElementById('title');
+	const default_title = entry_title.value || '';
+	const entry_validator = document.getElementById('entry_validator');
+	const config = entry_validator.dataset.config;
+	const submit_btn = document.getElementById('submit_btn');
+
+	// On start disable creation submit button
+	submit_btn.disabled = config === "edit" ? false : true
+
+	entry_title.addEventListener("keyup", function () {
+		let value = this.value ? this.value.toLowerCase().trim() : this.value;
+		let entry_lowered = unavailable_entries.map(function (e) { return e.toLowerCase().trim() })
+
+		if (value !== undefined && value.length > 1) {
+			const val = value.toLowerCase().trim()
+
+			let entry_is_valid = entry_lowered.includes(val)
+			if (config === "edit" && default_title.toLowerCase() === val) {
+				/** If updating and not creating a entry, Don't disable submit 
+						button if title matches itself.
+						Else on creation, toogle submit button accordingly
+				**/
+				submit_btn.disabled = false
+				console.log('Same Name', { default_title }, { val })
+				return render_display(true)
+			} else {
+				submit_btn.disabled = entry_is_valid
+				render_display(!entry_is_valid)
+			}
+
+		} else {
+			submit_btn.disabled = false;
+			entry_validator.style.cssText = `
+							visibility: hidden;
+							background: "inherit";
+							`;
+		}
+	});
+
+	function render_display(available) {
+		let bgc = ["red", 'lightgreen'];
+		let text = ['This entry is already taken', 'Available']
+		entry_validator.innerText = text[+available];
+
+		entry_validator.style.cssText += `
+				visibility: visible;
+				color: #fff;
+				background-color: ${bgc[+available]};
+				text-shadow: 2px 2px 6px rgba(0,0,0,.6);
+				width:fit-content;
+				border-radius: 4px;
+				`
+	}
+</script>
+
+{% endverbatim %}
+{% endblock %}

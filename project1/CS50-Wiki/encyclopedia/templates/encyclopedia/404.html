@@ -1,0 +1,42 @@
+{% extends "encyclopedia/layout.html" %}
+{% load static %}
+
+{% block body %}
+<section id="wiki-404-container">
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <div class="jumbotron text-center font-weight-bold">
+        <div class="jumbotron--left lost-img">
+          <img
+            src="https://user-images.githubusercontent.com/54720725/97697229-175ae880-1a7d-11eb-9626-f9535eb7585b.jpg"
+            alt="">
+        </div>
+
+        <div class="jumbotron--right m-auto px-2">
+          <div class="header m-1 mx-n1">
+            <h1 class="display-4 font-weight-bold"> Breaking News </h2>
+              <div class="content p-2">
+                <p class="mx-0 text-left font-weight-bold">Just In:</p>
+                <p class="lost-text text-left px-2">
+                  An unknown subject find themselves lost while navigating Wiki website.
+                  They were last seen trying to find the home page. If you see this person, tell them to click the
+                  <span>
+                    "Go Home"</span> button below </p>
+              </div>
+          </div>
+
+          <h1 class="error-code font-weight-bolder display-1"> 404</h1>
+          <h2 class="display-5 font-weight-bold"> Opp.. Seems Like You Are Lost! </h2>
+
+          <hr class="my-3" />
+          <h4 class="lead p-2"> Let Get You On the Right Track </h4>
+          <p class=" home-btn-container lead mb-4">
+            <a class="home-btn btn btn-danger btn-lg" href="{% url 'index' %}" role="button">Go Home</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock  %}
