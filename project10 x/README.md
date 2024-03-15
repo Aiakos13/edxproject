@@ -1,5 +1,11 @@
 # Typing game 
-
+Hello.
+My project typing game:
+This is a game based on your typing speed where to see the next word you'll need to type the word you see on the screen as fast as you can.
+My name is sina hoorasfand.
+My github addres is aiakos13 and edx name is sinahoorasfand.
+I'm from Tabriz, Iran.
+Date record time: 2024/3/15.
 ## Year: 2024
 # PROJECT TITLE
 ***Aiakos WORDBEATER🏆***
