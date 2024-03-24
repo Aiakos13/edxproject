@@ -1,0 +1,29 @@
+{% extends "djangoapp/_base.html" %}
+
+{% load static %}
+
+{% block title %}
+  New photos | DjangoGram
+{% endblock %}
+
+{% block import_scripts %}
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Main column -->
+            <div class="col-lg-10 offset-lg-1 col-xl-8 offset-xl-2">
+                {% if following %}
+                    {% for post in posts %}
+                        {% include "djangoapp/_posts_list.html" %}
+                    {% empty %}
+                        <p class="text-center"><strong>People you follow don't upload photos yet</strong></p>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-center"><strong>You don't follow anyone</strong></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

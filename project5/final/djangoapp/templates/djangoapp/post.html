@@ -1,0 +1,71 @@
+{% extends "djangoapp/_base.html" %}
+
+{% load static %}
+
+{% block title %}
+  {{ post.author.user.username }}'s photo | DjangoGram
+{% endblock %}
+
+{% block import_scripts %}
+    <script src="{% static 'djangoapp/js/post.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-lg-6 offset-lg-1 col-xl-5 offset-xl-2">
+                <img class="img-post" src="{{ post.image.url }}" alt="{{ post.author.user.username}} photo" title="{{ post.author.user.username}} photo">
+                <div class="row" id="photo-info">
+                    <div class="col col-lg col-xl text-left">
+                        <p>Likes: <span id="likes-count">{{ post.liked.count }}</span></p>
+                        <p>Comments: <span id="comments-count">{{ post.comments.count }}</span></p>
+                    </div>
+                    {% if request.user.is_authenticated %}
+                        <div class="col col-lg col-xl text-right">
+                            <button class="btn btn-primary like-btn" type="button" name="like" {% if user_liked %}disabled{% endif %}>Like!</button>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 col-xl-3">
+                <div class="post-info">
+                    <blockquote class="blockquote">
+                        <p class="mb-0">{{ post.description }}</p>
+                        <footer class="blockquote-footer text-right"><a href="{% url 'user' post.author.user.id %}">{{ post.author.user.username }}</a> <cite title="{{ post.created }}">@ {{ post.created|date:"F j, Y, g:i a" }}</cite></footer>
+                    </blockquote>
+                </div>
+
+                <hr>
+
+                <div class="post-comments">
+                    <div id="comments-list">
+                        {% for comment in comments %}
+                            <div class="comment-entity">
+                                <div class="text-right comment-info">
+                                    <span class="comment-author"><a href="{% url 'user' comment.author.user.id %}">{{ comment.author.user.username }}</a></span>
+                                    <span class="comment-created">{{ comment.created }}</span>
+                                </div>
+                                <div class="comment-text">
+                                    {{ comment.text }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if request.user.is_authenticated %}
+                        <form id="comment-form" action="{% url 'comment' %}" method="post">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input id="comment-input" type="text" class="form-control" name="comment" placeholder="Leave a comment...">
+                                <div class="input-group-append">
+                                    <button id="comment-form-btn" class="btn btn-primary text-white btn-outline-secondary" type="submit">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

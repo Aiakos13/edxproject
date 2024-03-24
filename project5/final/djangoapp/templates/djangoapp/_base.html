@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="CS50Web Final Project">
+
+    <title>
+      {% block title %}
+      {% endblock %}
+    </title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="{% static 'djangoapp/css/style.css' %}" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.1.2/caman.full.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/aa436d998a.js"></script>
+
+    <script src="{% static 'djangoapp/js/search.js' %}"></script>
+
+    {% block import_scripts %}
+    {% endblock %}
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-md navbar-light bg-primary fixed-top d-flex">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarToggler">
+            <a id="brand-logo" class="navbar-brand mr-auto fancy-font" href="{% url 'index' %}">DjangoGram</a>
+            <form id="search-form" class="form-inline" action="{% url 'search' %}" method="get">
+              <input id="search-query" class="form-control" type="search" name="q" placeholder="Search">
+              <button id="search-btn" class="btn" type="submit"><i class="fas fa-search"></i></button>
+            </form>
+            {% if request.user.is_authenticated %}
+                <a class="nav-link" href="{% url 'upload' %}" data-toggle="tooltip" data-placement="bottom" title="Add photo"><span class="d-md-none align-top mr-2">Add a photo</span><i class="fas fa-plus-square"></i></a>
+                <a class="nav-link" href="{% url 'user' %}" data-toggle="tooltip" data-placement="bottom" title="Your profile"><span class="d-md-none align-top mr-2">Profile</span><i class="fas fa-user-circle"></i></a>
+                <a class="nav-link" href="{% url 'logout' %}" data-toggle="tooltip" data-placement="bottom" title="Log out"><span class="d-md-none align-top mr-2">Log out</span><i class="fas fa-sign-out-alt"></i></a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <main>
+      {% block main %}
+      {% endblock %}
+    </main>
+
+    <footer class="bg-info fixed-bottom">
+      <p class="text-center">
+        Made by <a href="mailto:sinahoora1313@gmail.com">Aiakos</a> for CS50Web course
+      </p>
+    </footer>
+  </body>
+</html>

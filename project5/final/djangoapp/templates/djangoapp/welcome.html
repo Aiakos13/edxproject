@@ -1,0 +1,70 @@
+{% extends "djangoapp/_base.html" %}
+
+{% load static %}
+
+{% block title %}
+  Welcome to DjangoGram!
+{% endblock %}
+
+{% block import_scripts %}
+    <script src="{% static 'djangoapp/js/welcome.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        <div class="row welcome-row">
+            <div class="col-md-8 offset-md-2 col-lg-4 offset-lg-2 col-xl-3 offset-xl-3 fancy-font text-center welcome-col">
+                <p>
+                    Django<br>Gram
+                </p>
+            </div>
+            <div class="col-md-8 offset-md-2 col-lg-4 offset-lg-0 col-xl-3 offset-xl-0 welcome-col">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-login-tab" data-toggle="tab" href="#nav-login" role="tab">Log in</a>
+                        <a class="nav-item nav-link" id="nav-register-tab" data-toggle="tab" href="#nav-register" role="tab">Register</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-login" role="tabpanel">
+                        <form id="form-login" name="form-login" action="{% url 'login' %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="login-username">Username</label>
+                                <input type="text" class="form-control" id="login-username" name="username" placeholder="Username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="login-password">Password</label>
+                                <input type="password" class="form-control" id="login-password" name="password" placeholder="Password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Log in</button>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="nav-register" role="tabpanel">
+                        <form id="form-register" name="form-register" action="{% url 'register' %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="reg-username">Username</label>
+                                <input type="text" class="form-control" id="reg-username" name="username" placeholder="Username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-email">Email address</label>
+                                <input type="email" class="form-control" id="reg-email" name="email" placeholder="Email" required>
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-password1">Password</label>
+                                <input type="password" class="form-control" id="reg-password1" name="password1" placeholder="Password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-password2">Confirm password</label>
+                                <input type="password" class="form-control" id="reg-password2" name="password2" placeholder="Password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Register</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,49 @@
+<div class="post-entity">
+    <div class="row">
+        <div class="col-lg col-xl">
+            <div class="post-author">
+                <a href="{% url 'user' post.author.user.id %}">{{ post.author.user.username }}</a>
+            </div>
+            <div class="post-created">
+                {{ post.created|date:"F j, Y, g:i a" }}
+            </div>
+            <div class="post-photo">
+                <a href="{% url 'post' post.id %}">
+                    <img src="{{ post.image.url }}" alt="{{ post.author.user.username }} photo">
+                </a>
+            </div>
+            <div class="post-stat">
+                <span>Likes: {{ post.liked.count }}</span> |
+                <span>Comments: {{ post.comments.count }}</span>
+            </div>
+        </div>
+        <div class="col-lg col-xl">
+            <div class="post-description">
+                <blockquote class="blockquote">
+                    <p class="mb-0">{{ post.description }}</p>
+                    <footer class="blockquote-footer text-right"><a href="{% url 'user' post.author.user.id %}">{{ post.author.user.username }}</a> <cite title="{{ post.created }}">@ {{ post.created|date:"F j, Y, g:i a" }}</cite></footer>
+                </blockquote>
+            </div>
+
+            <hr>
+
+            <div class="post-comments">
+                {% for comment in post.comments.all|dictsortreversed:"created" %}
+                <div class="comment-entity">
+                    <div class="text-right comment-info">
+                        <span class="comment-author"><a href="{% url 'user' comment.author.user.id %}">{{ comment.author.user.username }}</a></span>
+                        <span class="comment-created">{{ comment.created }}</span>
+                    </div>
+                    <div class="comment-text">
+                        {{ comment.text }}
+                    </div>
+                </div>
+                {% empty %}
+                    <p>
+                        <strong>No comments yet</strong>
+                    </p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+{% extends "djangoapp/_base.html" %}
+
+{% load static %}
+
+{% block title %}
+  {{ user_ex.user.username }}'s profile | DjangoGram
+{% endblock %}
+
+{% block import_scripts %}
+    <script src="{% static 'djangoapp/js/user.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        <!-- User info row -->
+        <div id="user-info" class="row">
+            <!-- Avatar column -->
+            <div class="col-sm-5 col-md-5 col-lg-3 offset-lg-2 col-xl-3 offset-xl-2 text-center">
+                {% if request.user.id == user_ex.user.id %}
+                    <a id="change-avatar-link" href="#">
+                        <img id="avatar-img" class="avatar-profile avatar-profile-big" src="{{ user_ex.avatar.url }}" alt="{{ user_ex.user.username }} avatar" data-toggle="tooltip" title="Click to change avatar">
+                        <input type="file" id="upload-avatar" name="file" style="display: none;">
+                    </a>
+                {% else %}
+                    <img id="avatar-img" class="avatar-profile avatar-profile-big" src="{{ user_ex.avatar.url }}" alt="{{ user_ex.user.username }} avatar" title="{{ user_ex.user.username }}">
+                {% endif %}
+                <p>{{ user_ex.user.username }}</p>
+            </div>
+
+            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 text-center">
+                {% if show_follow_button %}
+                    <button id="follow-btn" class="btn btn-primary" type="button" name="follow" {% if already_follow %}disabled{% endif %}>Follow</button>
+                {% endif %}
+            </div>
+
+            <!-- Info column -->
+            <div class="col-sm-5 col-md-5 col-lg-3 col-xl-3 text-center" id="user-counts">
+                <p>Posts: {{ posts.count }}</p>
+                {% if followers %}
+                    <p>Followers: <span id="followers_count"><a href="{% url 'followers' user_ex.user.id %}">{{ followers }}</a></span></p>
+                {% else %}
+                    <p>Followers: <span id="followers_count">{{ followers }}</span></p>
+                {% endif %}
+                {% if following %}
+                    <p>Following: <span id="following_count"><a href="{% url 'following' user_ex.user.id %}">{{ following }}</a></span></p>
+                {% else %}
+                    <p>Following: <span id="following_count">{{ following }}</span></p>
+                {% endif %}
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- User photos -->
+        <div class="row">
+            <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
+                {% if posts %}
+                    <div class="d-flex flex-wrap justify-content-between">
+                        {% for post in posts %}
+                            <img class="img-gallery align-self-center" data-toggle="tooltip" data-html="true" data-post-id="{{ post.id }}" data-likes="{{ post.liked.count }}" data-comments="{{ post.comments.count }}" src="{{ post.image.url }}" alt="{{ post.author.user.username}} photo" title="Likes: {{ post.liked.count }}<br>Comments: {{ post.comments.count }}">
+                        {% endfor %}
+                        {% for dummy in dummies %}
+                            <div class="dummy"></div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-center"><strong>There is no photos yet</strong></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

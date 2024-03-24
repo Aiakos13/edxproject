@@ -1,0 +1,20 @@
+<div class="user-entity">
+    <div class="row d-flex align-items-center">
+        <div class="col-6 col-lg col-xl text-center">
+            <a href="{% url 'user' user.user.id %}">
+                <img class="avatar-profile avatar-profile-big" src="{{ user.avatar.url }}" alt="{{ user.user.username }} avatar" title="{{ user.user.username }}">
+            </a>
+        </div>
+        <div class="col-6 order-1 col-lg col-xl text-center">
+            <a href="{% url 'user' user.user.id %}">
+                <p>{{ user.user.username }}</p>
+            </a>
+        </div>
+        <div class="col-6 order-12 col-lg col-xl text-center">
+            Followers: <span>{{ user.followers.count }}</span>
+        </div>
+        <div class="col-6 col-lg col-xl text-center">
+            Following: <span>{{ user.following.count }}</span>
+        </div>
+    </div>
+</div>

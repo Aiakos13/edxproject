@@ -1,0 +1,25 @@
+{% extends "djangoapp/_base.html" %}
+
+{% load static %}
+
+{% block title %}
+  {{ user_ex.user.username }}'s followings | DjangoGram
+{% endblock %}
+
+{% block import_scripts %}
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 text-center">
+                <h3 class="caption"><strong>{{ user_ex.user.username }}'s</strong> followings</h3>
+            </div>
+            <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
+                {% for user in following %}
+                    {% include "djangoapp/_users_list.html" %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

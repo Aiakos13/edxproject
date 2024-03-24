@@ -1,0 +1,45 @@
+{% extends "djangoapp/_base.html" %}
+
+{% load static %}
+
+{% block title %}
+  Search results | DjangoGram
+{% endblock %}
+
+{% block import_scripts %}
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
+                <div class="text-center search-header">
+                    <h3>Search results</h3>
+                </div>
+                <div class="text-center">
+                    <h4>Users</h4>
+                </div>
+                {% for user in users %}
+                    {% include "djangoapp/_users_list.html" %}
+                {% empty %}
+                    <p>
+                        <strong>No users found</strong>
+                    </p>
+                {% endfor %}
+
+                <hr>
+
+                <div class="text-center">
+                    <h4>Posts</h4>
+                </div>
+                {% for post in posts %}
+                    {% include "djangoapp/_posts_list.html" %}
+                {% empty %}
+                    <p>
+                        <strong>No posts found</strong>
+                    </p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

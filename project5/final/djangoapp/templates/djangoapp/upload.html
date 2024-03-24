@@ -1,0 +1,181 @@
+{% extends "djangoapp/_base.html" %}
+
+{% load static %}
+
+{% block title %}
+  Upload your photo | DjangoGram
+{% endblock %}
+
+{% block import_scripts %}
+  <script src="{% static 'djangoapp/js/upload.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        <div class="row main-row">
+            <div class="col-12 col-md-6 col-lg-5 offset-lg-1 col-xl-4 offset-xl-2">
+                <input type="file" id="upload-photo" name="file" style="display: none;">
+                <div id="image-placeholder">
+                    <img id="new-photo" src="{{MEDIA_URL}}/no_image.png" alt="">
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-5 col-xl-4" id="photo-options">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-descr-tab" data-toggle="tab" href="#nav-descr" role="tab">Description</a>
+                        <a class="nav-item nav-link" id="nav-filters-tab" data-toggle="tab" href="#nav-filters" role="tab">Filters</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-descr" role="tabpanel">
+                        <textarea></textarea>
+                    </div>
+                    <div class="tab-pane fade" id="nav-filters" role="tabpanel">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-10 col-sm col-md col-lg col-xl">
+                                    <p>Brightness</p>
+                                </div>
+                                <div class="col order-last col-sm order-sm-0 col-md col-lg col-xl text-center">
+                                    <input class="filter-input" type="range" min="-100" max="100" step="1" value="0" data-filter="brightness" autocomplete="off">
+                                </div>
+                                <div class="col-1 order-1 col-sm order-sm-0 col-md col-lg col-xl">
+                                    <p data-filter-value="brightness">0</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10 col-sm col-md col-lg col-xl">
+                                    <p>Contrast</p>
+                                </div>
+                                <div class="col order-last col-sm order-sm-0 col-md col-lg col-xl text-center">
+                                    <input class="filter-input" type="range" min="-100" max="100" step="1" value="0" data-filter="contrast" autocomplete="off">
+                                </div>
+                                <div class="col-1 order-1 col-sm order-sm-0 col-md col-lg col-xl">
+                                    <p data-filter-value="contrast">0</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10 col-sm col-md col-lg col-xl">
+                                    <p>Saturation</p>
+                                </div>
+                                <div class="col order-last col-sm order-sm-0 col-md col-lg col-xl text-center">
+                                    <input class="filter-input" type="range" min="-100" max="100" step="1" value="0" data-filter="saturation" autocomplete="off">
+                                </div>
+                                <div class="col-1 order-1 col-sm order-sm-0 col-md col-lg col-xl">
+                                    <p data-filter-value="saturation">0</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10 col-sm col-md col-lg col-xl">
+                                    <p>Vibrance</p>
+                                </div>
+                                <div class="col order-last col-sm order-sm-0 col-md col-lg col-xl text-center">
+                                    <input class="filter-input" type="range" min="-100" max="100" step="1" value="0" data-filter="vibrance" autocomplete="off">
+                                </div>
+                                <div class="col-1 order-1 col-sm order-sm-0 col-md col-lg col-xl">
+                                    <p data-filter-value="vibrance">0</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10 col-sm col-md col-lg col-xl">
+                                    <p>Exposure</p>
+                                </div>
+                                <div class="col order-last col-sm order-sm-0 col-md col-lg col-xl text-center">
+                                    <input class="filter-input" type="range" min="-100" max="100" step="1" value="0" data-filter="exposure" autocomplete="off">
+                                </div>
+                                <div class="col-1 order-1 col-sm order-sm-0 col-md col-lg col-xl">
+                                    <p data-filter-value="exposure">0</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10 col-sm col-md col-lg col-xl">
+                                    <p>Hue</p>
+                                </div>
+                                <div class="col order-last col-sm order-sm-0 col-md col-lg col-xl text-center">
+                                    <input class="filter-input" type="range" min="0" max="100" step="1" value="0" data-filter="hue" autocomplete="off">
+                                </div>
+                                <div class="col-1 order-1 col-sm order-sm-0 col-md col-lg col-xl">
+                                    <p data-filter-value="hue">0</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10 col-sm col-md col-lg col-xl">
+                                    <p>Sepia</p>
+                                </div>
+                                <div class="col order-last col-sm order-sm-0 col-md col-lg col-xl text-center">
+                                    <input class="filter-input" type="range" min="0" max="100" step="1" value="0" data-filter="sepia" autocomplete="off">
+                                </div>
+                                <div class="col-1 order-1 col-sm order-sm-0 col-md col-lg col-xl">
+                                    <p data-filter-value="sepia">0</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10 col-sm col-md col-lg col-xl">
+                                    <p>Gamma</p>
+                                </div>
+                                <div class="col order-last col-sm order-sm-0 col-md col-lg col-xl text-center">
+                                    <input class="filter-input" type="range" min="0" max="10" step="0.1" value="1" data-filter="gamma" autocomplete="off">
+                                </div>
+                                <div class="col-1 order-1 col-sm order-sm-0 col-md col-lg col-xl">
+                                    <p data-filter-value="gamma">1</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10 col-sm col-md col-lg col-xl">
+                                    <p>Noise</p>
+                                </div>
+                                <div class="col order-last col-sm order-sm-0 col-md col-lg col-xl text-center">
+                                    <input class="filter-input" type="range" min="0" max="100" step="1" value="0" data-filter="noise" autocomplete="off">
+                                </div>
+                                <div class="col-1 order-1 col-sm order-sm-0 col-md col-lg col-xl">
+                                    <p data-filter-value="noise">0</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10 col-sm col-md col-lg col-xl">
+                                    <p>Clip</p>
+                                </div>
+                                <div class="col order-last col-sm order-sm-0 col-md col-lg col-xl text-center">
+                                    <input class="filter-input" type="range" min="0" max="100" step="1" value="0" data-filter="clip" autocomplete="off">
+                                </div>
+                                <div class="col-1 order-1 col-sm order-sm-0 col-md col-lg col-xl">
+                                    <p data-filter-value="clip">0</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10 col-sm col-md col-lg col-xl">
+                                    <p>Sharpen</p>
+                                </div>
+                                <div class="col order-last col-sm order-sm-0 col-md col-lg col-xl text-center">
+                                    <input class="filter-input" type="range" min="0" max="100" step="1" value="0" data-filter="sharpen" autocomplete="off">
+                                </div>
+                                <div class="col-1 order-1 col-sm order-sm-0 col-md col-lg col-xl">
+                                    <p data-filter-value="sharpen">0</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10 col-sm col-md col-lg col-xl">
+                                    <p>StackBlur</p>
+                                </div>
+                                <div class="col order-last col-sm order-sm-0 col-md col-lg col-xl text-center">
+                                    <input class="filter-input" type="range" min="0" max="20" step="1" value="0" data-filter="stackBlur" autocomplete="off">
+                                </div>
+                                <div class="col-1 order-1 col-sm order-sm-0 col-md col-lg col-xl">
+                                    <p data-filter-value="stackBlur">0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="new-photo-buttons">
+                    <div class="col col-lg col-xl text-center">
+                        <button id="reset-filters-btn" type="button" class="btn btn-secondary">Reset filters</button>
+                    </div>
+                    <div class="col col-lg col-xl text-center">
+                        <button id="upload-photo-btn" type="button" class="btn btn-primary">Upload photo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,335 @@
+@import "vars";
+
+// Common styles
+.fancy-font {
+    font-family: 'Permanent Marker', cursive;
+}
+
+nav.navbar {
+    .navbar-brand {
+      font-size: $brand-font-size;
+    }
+
+    .nav-link {
+        @media (max-width: 767px) {
+            padding-left: 0;
+        }
+
+        color: black;
+
+        &:hover {
+            color: white;
+        }
+
+        i.fas, i.fab {
+            font-size: $navbar-fontawesome-font-size;
+        }
+    }
+}
+
+main {
+    margin-top: $main-top-margin;
+    margin-bottom: $main-bottom-margin;
+
+    @media (max-width: 991px) {
+        margin-top: $main-top-margin;
+        margin-bottom: $main-bottom-margin;
+    }
+
+    @media (max-width: 767px) {
+        margin-top: $main-top-margin / 1.3;
+        margin-bottom: $main-bottom-margin / 1.1;
+    }
+
+    @media (max-width: 575px) {
+        margin-top: $main-top-margin / 1.4;
+        margin-bottom: $main-bottom-margin / 1.2;
+    }
+
+    div.tab-content div.tab-pane {
+        margin-top: $tab-pane-margin;
+
+        @media (max-width: 575px) {
+            margin-top: $tab-pane-margin;
+        }
+    }
+}
+
+footer p {
+    margin: $footer-margin auto;
+}
+
+// Welcome page
+input#search-query {
+    width: auto;
+}
+
+.welcome-row {
+    height: calc(100vh - #{$main-margin});
+
+    @media (max-width: 991px) {
+        height: inherit;
+    }
+
+    .welcome-col {
+        margin-top: auto;
+        margin-bottom: auto;
+
+        @media (max-width: 991px) {
+            margin-top: inherit;
+            margin-bottom: inherit;
+        }
+    }
+
+    p {
+        font-size: $welcome-left-font-size;
+        margin-bottom: 0;
+
+        @media (max-width: 991px) {
+            font-size: $welcome-left-font-size;
+
+            br {
+                display: none;
+            }
+        }
+
+        @media (max-width: 575px) {
+            font-size: $welcome-left-font-size / 2;
+
+            br {
+                display: none;
+            }
+        }
+    }
+}
+
+// Upload photo page
+#image-placeholder {
+    margin: 0;
+    padding: 0;
+
+    #new-photo {
+        width: 100%;
+        border: 1px solid black;
+    }
+}
+
+.main-row {
+    #photo-options {
+        @media (max-width: 767px) {
+            margin-top: 1em;
+        }
+
+        textarea {
+            width: 100%;
+        }
+
+        #nav-filters {
+            @media (max-width: 575px) {
+                .container-fluid .row {
+                    &:not(:last-child) {
+                        margin-bottom: 0.5em;
+                    }
+                }
+            }
+
+            p {
+                margin-bottom: $filters-paragraphs-margin;
+            }
+        }
+
+        #new-photo-buttons {
+            width: 100%;
+            margin-top: 1em;
+        }
+    }
+}
+
+// User page
+#user-info {
+    #user-counts p:first-child {
+        margin-top: 0;
+    }
+
+    & + hr {
+        margin-top: 0;
+    }
+
+    p {
+        font-weight: bold;
+        margin-top: $avatar-username-margin;
+        margin-bottom: $avatar-username-margin;
+    }
+}
+
+.avatar-profile {
+    border-radius: 50%;
+}
+
+.avatar-profile-big {
+    width: 33%
+}
+
+img.img-gallery {
+    width: 25%;
+    height: 100%;
+
+    @media (max-width: 991px) {
+        width: 33.333333%;
+        height: 100%;
+    }
+
+    @media (max-width: 767px) {
+        width: 50%;
+        height: 100%;
+    }
+
+    @media (max-width: 575px) {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+div.dummy {
+    width: 25%;
+    height: 0;
+
+    @media (max-width: 991px) {
+        width: 33.333333%;
+        height: 0;
+    }
+
+    @media (max-width: 767px) {
+        width: 50%;
+        height: 0;
+    }
+
+    @media (max-width: 575px) {
+        width: 100%;
+        height: 0;
+    }
+}
+
+// Shared between index and post
+%comment-entity {
+    .comment-info {
+        font-size: 0.8em;
+        font-style: italic;
+
+        .comment-author {
+            font-weight: bold;
+        }
+
+        .comment-created {
+            color: $gray-color;
+
+            &::before {
+                content: "@ ";
+            }
+        }
+    }
+}
+
+// Post page
+img.img-post {
+    width: 100%;
+    border: 1px solid black;
+}
+
+#photo-info {
+    margin-top: 0.5em;
+
+    div p {
+        font-style: italic;
+
+        &:not(:last-child) {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.post-comments {
+    #comments-list {
+        .comment-entity {
+            @extend %comment-entity;
+        }
+    }
+
+    form#comment-form {
+        &:not(:first-child) {
+            margin-top: 1em;
+        }
+    }
+}
+
+// Index page
+.post-entity {
+    border: 1px solid black;
+    border-radius: 0.5em;
+    padding: 1em;
+
+    &:not(:last-child) {
+        margin-bottom: 0.8em;
+    }
+
+    .post-author {}
+
+    .post-created {
+        font-size: 0.8em;
+
+        color: $gray-color;
+    }
+
+    .post-photo {
+        img {
+            border: 1px solid black;
+            width: 100%;
+        }
+    }
+
+    .post-stat {
+        font-style: italic;
+
+        margin-top: 0.4em;
+    }
+
+    .post-comments {
+        .comment-entity {
+            @extend %comment-entity;
+        }
+    }
+}
+
+// Following and followers lists
+.caption {
+    margin-bottom: 1em;
+}
+
+.user-entity {
+    &:not(:last-child) {
+        margin-bottom: 1em;
+    }
+
+    p {
+        font-weight: bold;
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 575px) {
+    .user-entity {
+        &:not(:last-child) {
+            margin-bottom: 2em;
+        }
+
+        p {
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+    }
+}
+
+// Search results
+.search-header {
+    margin-bottom: 1em;
+}
