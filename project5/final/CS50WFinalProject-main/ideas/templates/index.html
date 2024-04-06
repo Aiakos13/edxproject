@@ -1,0 +1,26 @@
+{% extends 'layout.html' %} {% block body %}
+
+<div class="cintainer title-area">
+  <h1 class="brand">Random Ideas For Everyone</h1>
+  <p class="desc">Add Your Idea For Next Generations</p>
+</div>
+<div class="addingbutton">
+  <button type="button" id="btnforadd" class="btn btn-outline-dark">Add Idea</button>
+</div>
+<div class="addform">
+<form id="addideaform" method="POST" action="addidea/">
+  {% csrf_token %}
+  <div class="hidediv"></div>
+</form>`
+</div>
+<div class="container">
+  <div class="row" id="ideas"></div>
+</div>
+
+<div class="footer">
+  <p class="footer-info">
+    Created for CS50W Final Project - It's Created By Ersin Mutlu
+  </p>
+</div>
+
+{% endblock %}

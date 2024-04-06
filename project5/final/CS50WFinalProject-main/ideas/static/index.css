@@ -1,0 +1,153 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: 0;
+}
+
+body {
+  background-color: rgb(226, 226, 226);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+/* Title Area */
+.title-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 30vh;
+  width: 100vw;
+  margin: 2rem 0 0;
+}
+
+/* Adding Idea Button */
+.addingbutton {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.btn {
+  max-width: 100px;
+  position: relative;
+  left: -100px;
+}
+
+/* Idea Area */
+
+/* Idea Cards */
+
+.idea-card {
+  background-color: whitesmoke;
+  max-width: 400px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  margin: 1rem 0;
+}
+.card-title {
+  border-bottom: 1px solid #444;
+  position: relative;
+}
+.card-text {
+  margin: 1rem 0;
+}
+.card-link {
+  text-decoration: none;
+  color: black;
+  float: right;
+}
+.card-user {
+  float: left;
+  font-weight: bolder;
+}
+.deletebutton {
+  position: absolute;
+  right: 0;
+  box-shadow: none;
+  border: none;
+  transition: 200ms;
+}
+.deletebutton:hover {
+  color: red;
+  transform: translateY(-3px);
+}
+.editbutton {
+  position: absolute;
+  right: 2rem;
+  border: none;
+  transition: 200ms;
+}
+.editbutton:hover {
+  transform: translateY(-3px);
+}
+/* Add Idea */
+
+.addform {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 40%);
+  z-index: 1;
+}
+#addideaform {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(45deg, rgb(150, 50, 217), rgb(43, 183, 151));
+  border-radius: 25px;
+  padding: 30px;
+  font-weight: bolder;
+  color: whitesmoke;
+}
+#ideatitle {
+  width: 400px;
+}
+#ideadesc {
+  width: 400px;
+  height: 6rem;
+}
+#submit-btn {
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(225deg, rgb(150, 50, 217), rgb(43, 183, 151));
+  border: none;
+  outline: none;
+  transition: 400ms;
+}
+#submit-btn:hover {
+  background: rgb(43, 183, 151);
+  transform: translateX(-50%) scale(1.1);
+}
+
+/* Footer */
+.footer {
+  margin-top: auto;
+  position: absolute;
+  display: inline-block;
+  bottom: 0;
+  text-align: center;
+  width: 100vw;
+}
+.footer-info {
+  margin: 0;
+  padding: 0;
+}
